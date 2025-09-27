@@ -3,8 +3,22 @@
 BookIt_App/
 ├── main.py
 ├── routes/
+│   ├── auth.py
+│   ├── service.py
+│   ├── booking.py
+│   ├── review.py
+│   ├── user.py
 ├── crud/
+│   ├── service.py
+│   ├── booking.py
+│   ├── review.py
+│   ├── user.py
 ├── schemas/
+│   ├── auth.py
+│   ├── service.py
+│   ├── booking.py
+│   ├── review.py
+│   ├── user.py
 ├── models.py
 ├── database.py
 ├── dependency.py
@@ -71,4 +85,5 @@ The API is deployed on PipeOps, a platform for simplified app deployment.
   5. Deploy the app.  
 - **Public Base URL**: https://bookit-api.pipeops.app  
 - **Live OpenAPI Docs**: https://bookit-api.pipeops.app/docs
+
 
