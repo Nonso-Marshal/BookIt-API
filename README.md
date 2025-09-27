@@ -1,5 +1,16 @@
 # BookIt API 
 
+BookIt_App/
+├── main.py
+├── routes/
+├── crud/
+├── schemas/
+├── models.py
+├── database.py
+├── dependency.py
+├── .env
+├── .gitignore
+
 ## Overview
 BookIt is a REST API for a bookings platform built with FastAPI, allowing users to browse services, make bookings, and leave reviews, while admins manage users, services, and bookings.
 
