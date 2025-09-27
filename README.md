@@ -1,14 +1,23 @@
 # BookIt API 
 
 BookIt_App/
+
 ├── main.py
+
 ├── routes/
+
 ├── crud/
+
 ├── schemas/
+
 ├── models.py
+
 ├── database.py
+
 ├── dependency.py
+
 ├── .env
+
 ├── .gitignore
 
 ## Overview
@@ -71,3 +80,4 @@ The API is deployed on PipeOps, a platform for simplified app deployment.
   5. Deploy the app.  
 - **Public Base URL**: https://bookit-api.pipeops.app  
 - **Live OpenAPI Docs**: https://bookit-api.pipeops.app/docs
+
