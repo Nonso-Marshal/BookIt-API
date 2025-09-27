@@ -1,23 +1,14 @@
 # BookIt API 
 
 BookIt_App/
-
 ├── main.py
-
 ├── routes/
-
 ├── crud/
-
 ├── schemas/
-
 ├── models.py
-
 ├── database.py
-
 ├── dependency.py
-
 ├── .env
-
 ├── .gitignore
 
 ## Overview
