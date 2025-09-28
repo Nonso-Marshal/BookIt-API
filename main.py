@@ -16,6 +16,10 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the BookIt API"}
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 @app.post("/auth/login", response_model=Token, include_in_schema=False)

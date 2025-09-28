@@ -1,7 +1,12 @@
 from logging.config import fileConfig
+from logging import basicConfig, INFO
+from sqlalchemy import engine_from_config, pool
+from database import engine
+from models import User, Service, Booking, Review
+from base import Base
 import os
 import sys
-from sqlalchemy import engine_from_config, pool
+
 from alembic import context
 
 print("sys.path:", sys.path)
