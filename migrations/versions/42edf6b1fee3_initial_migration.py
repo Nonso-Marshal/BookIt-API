@@ -36,7 +36,7 @@ def upgrade() -> None:
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('password_hash', sa.String(), nullable=False),
-    sa.Column('role', sa.Enum('USER', 'ADMIN', name='role'), nullable=False),
+    sa.Column('role', sa.Enum('user', 'admin', name='role'), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')

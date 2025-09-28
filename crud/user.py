@@ -28,7 +28,7 @@ class UserService:
         hashed_password = get_password_hash(password)
 
         try:
-            role_value = Role[user_data.role.upper()]
+            role_value = Role[user_data.role.lower()]
         except KeyError:
             logger.error(f"Invalid role: {user_data.role}")
             raise ValueError(f"Invalid role: {user_data.role}. Must be 'user' or 'admin'")
