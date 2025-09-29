@@ -24,7 +24,7 @@ class UserResponse(BaseModel):
     id: int
     name: str
     email: EmailStr
-    role: str
+    role: Role
     created_at: datetime
 
 class UserUpdate(BaseModel):
