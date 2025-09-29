@@ -10,6 +10,7 @@ from database import get_db
 import logging
 import os
 from jose import jwt, JWTError
+from pydantic import EmailStr, ValidationError
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -39,6 +40,12 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
 
 @auth_router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    try:
+        EmailStr.validate(form_data.username)
+    except ValidationError:
+        logger.error(f"Login failed for {form_data.username}: Invalid email format")
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Invalid email format")
+    
     logger.debug(f"Login attempt for email: {form_data.username}")
     logger.debug(f"Received payload: {form_data.__dict__}")
     user = db.query(DBUser).filter(DBUser.email == form_data.username).first()
