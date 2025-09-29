@@ -12,6 +12,7 @@ def init_db():
             raise Exception("Database engine not initialized. check DATABASE_URL")
         alembic_cfg = Config("alembic.ini")
         alembic_cfg.set_main_option("sqlalchemy.url", str(engine.url))
+        logger.info(f"Database URL: {str(engine.url)}")
         command.upgrade(alembic_cfg, "head")
         logger.info("Database tables created successfully via Alembic!")
     except Exception as error:

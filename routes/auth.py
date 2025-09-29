@@ -16,13 +16,13 @@ logger = logging.getLogger(__name__)
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-@auth_router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
+@auth_router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register(user_data: UserRegister, db: Session = Depends(get_db)):
     try:
         user = UserService.register_user(db, user_data)
         access_token = create_access_token({"sub": str(user.id), "role": user.role.value})
         refresh_token = create_refresh_token({"sub": str(user.id), "role": user.role.value})
-        return UserResponse
+        return UserResponse.model_validate(user)
     except ValueError as e:
         logger.error(f"Registration failed for {user_data.email}: {str(e)}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
