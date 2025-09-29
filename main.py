@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 @app.get("/")
+@app.head("/")
 async def root():
     return {"message": "Welcome to the BookIt API"}
 

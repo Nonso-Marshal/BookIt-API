@@ -11,7 +11,7 @@ logger.info("Loading models")
 
 class Role(enum.Enum):
     user = "user"
-    admin = "admin"
+    admin = "ADMIN"
 
 class BookingStatus(enum.Enum):
     PENDING = "pending"
