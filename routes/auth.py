@@ -22,7 +22,7 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
         user = UserService.register_user(db, user_data)
         access_token = create_access_token({"sub": str(user.id), "role": user.role.value})
         refresh_token = create_refresh_token({"sub": str(user.id), "role": user.role.value})
-        return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
+        return UserResponse
     except ValueError as e:
         logger.error(f"Registration failed for {user_data.email}: {str(e)}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
