@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from dependency import verify_password, create_access_token, create_refresh_token, get_current_user
 from crud.user import UserService
-from schemas.auth import UserRegister, Token
+from schemas.auth import UserRegister, Token, UserLogin
 from models import User as DBUser
 from schemas.user import UserResponse
 from database import get_db
@@ -41,9 +41,9 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
 @auth_router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     try:
-        EmailStr.validate(form_data.username)
-    except ValidationError:
-        logger.error(f"Login failed for {form_data.username}: Invalid email format")
+        UserLogin.model_validate({'email': form_data.username, 'password': form_data.password})
+    except ValidationError as e:
+        logger.error(f"Invalid email format for {form_data.username}: {str(e)}")
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Invalid email format")
     
     logger.debug(f"Login attempt for email: {form_data.username}")
