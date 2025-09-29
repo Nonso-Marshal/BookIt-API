@@ -22,7 +22,14 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
         user = UserService.register_user(db, user_data)
         access_token = create_access_token({"sub": str(user.id), "role": user.role.value})
         refresh_token = create_refresh_token({"sub": str(user.id), "role": user.role.value})
-        return UserResponse.model_validate(user)
+        user_dict = {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email,
+            "role": user.role,
+            "created_at": user.created_at
+        }
+        return UserResponse.model_validate(user_dict)
     except ValueError as e:
         logger.error(f"Registration failed for {user_data.email}: {str(e)}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
@@ -30,7 +37,7 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
         logger.error(f"Unexpected error during registration for {user_data.email}: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Registration failed")
 
-@auth_router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
+@auth_router.post("/login", response_model=UserResponse, status_code=status.HTTP_200_OK)
 def login(user_data: UserLogin, db: Session = Depends(get_db)):
     logger.debug(f"Login attempt for email: {user_data.email}")
     logger.debug(f"Received payload: {user_data.dict()}")
@@ -41,7 +48,14 @@ def login(user_data: UserLogin, db: Session = Depends(get_db)):
     access_token = create_access_token({"sub": str(user.id), "role": user.role.value})
     refresh_token = create_refresh_token({"sub": str(user.id), "role": user.role.value})
     logger.info(f"Login successful for {user_data.email}")
-    return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
+    user_dict = {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email,
+            "role": user.role,
+            "created_at": user.created_at
+        }
+    return UserResponse.model_validate(user_dict)
 
 @auth_router.post("/refresh", response_model=Token, status_code=status.HTTP_200_OK)
 def refresh_token(token: str = Depends(OAuth2PasswordBearer(tokenUrl="auth/login")), db: Session = Depends(get_db)):

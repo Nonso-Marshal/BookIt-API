@@ -19,6 +19,7 @@ class User(UserBase):
 
     class Config:
         from_attributes = True
+        arbitrary_types_allowed = True
 
 class UserResponse(BaseModel):
     id: int
@@ -26,6 +27,9 @@ class UserResponse(BaseModel):
     email: EmailStr
     role: Role
     created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 class UserUpdate(BaseModel):
     name: Optional[str] = None
