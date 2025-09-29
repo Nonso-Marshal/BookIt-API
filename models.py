@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 logger.info("Loading models")
 
 class Role(enum.Enum):
-    user = "user"
-    admin = "ADMIN"
+    USER = "USER"
+    ADMIN = "ADMIN"
 
 class BookingStatus(enum.Enum):
     PENDING = "pending"
@@ -25,7 +25,7 @@ class User(Base):
     name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
     password_hash = Column(String, nullable=False)
-    role = Column(Enum(Role), nullable=False, default=Role.user)
+    role = Column(Enum(Role), nullable=False, default=Role.USER)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     bookings = relationship("Booking", back_populates="user", cascade="all, delete")
     reviews = relationship("Review", back_populates="user", cascade="all, delete")
